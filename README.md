@@ -6,9 +6,10 @@ Author: B08901097 徐有齊，B08901132 任瑨洋
 ### Edge
 使用 Arduino Uno 、 Dragino LoRa shield 和 SHARP GP2Y1014AU PM2.5 Sensor 架設遠端 sensor 偵測空氣品質。此處的 Arduino Uno 將會是 LoRa 傳輸中的 client 。
 以下是 PM2.5 sensor 連接到 Arduino Uno 上的腳位圖：
-![PM2.5 Circuit](https://imgur.com/jdgksA9)
+![PM2.5 Circuit](https://i.imgur.com/jdgksA9.png)
+
 以下是實作圖片：
-![PM2.5 Circuit Implement](https://imgur.com/Xep1t5T)
+![PM2.5 Circuit Implement](https://i.imgur.com/Xep1t5T.jpg)
 
 ### MQTT Broker Server
 我們使用一個 Arduino Uno 作為 LoRa server ，接收來自 Dragino LoRa shield 的訊號，並將訊息以 UART 方式透過 USB 傳給 RPi 。
