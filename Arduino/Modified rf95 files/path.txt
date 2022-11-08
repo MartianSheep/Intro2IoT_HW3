@@ -1,1 +1,1 @@
-C:\Users\%USER%\Documents\Arduino\libraries\RadioHead
+C:\Users\%USERNAME%\Documents\Arduino\libraries\RadioHead
