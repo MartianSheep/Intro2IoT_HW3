@@ -4,21 +4,22 @@ Author: B08901097 徐有齊，B08901132 任瑨洋
 
 ## Hardware Setup
 ### Edge
-使用 Arduino Uno 、 Dragino LoRa shield 和 SHARP GP2Y1014AU PM2.5 Sensor 架設遠端 sensor 偵測空氣品質。此處的 Arduino Uno 將會是 LoRa 傳輸中的 client 。
+我們使用 Arduino Uno 、 Dragino LoRa shield 和 SHARP GP2Y1014AU PM2.5 Sensor 架設遠端 sensor 偵測空氣品質。此處的 Arduino Uno 將會是 LoRa 傳輸中的 client 。
 以下是 PM2.5 sensor 連接到 Arduino Uno 上的腳位圖：
 ![PM2.5 Circuit](https://i.imgur.com/jdgksA9.png?1)
 
-以下是實作圖片：
+以下是實作電路圖片：
 ![PM2.5 Circuit Implement](https://i.imgur.com/Xep1t5T.jpg)
 
 ### MQTT Broker Server
 我們使用一個 Arduino Uno 作為 LoRa server ，接收來自 Dragino LoRa shield 的訊號，並將訊息以 UART 方式透過 USB 傳給 RPi 。
 
 ### Front-end
-我們假定使用者使用PC打開我們設計的前端網頁。此前端網頁會 subscribe 到 RPi 的 MQTT broker ，這方面會在下一部分詳細說明。
+我們假定使用者使用 PC 打開我們設計的前端網頁。此前端網頁會 subscribe 到 RPi 的 MQTT broker ，這方面會在下一部分詳細說明。
 
 ## Software/Firmware Setup
 此作業所有的 code 皆可以在 https://github.com/MartianSheep/Intro2IoT_HW3 存取。
+
 ### Arduino
 #### 以下為操作步驟：
 1. 於燒錄用的電腦上安裝 Arduino IDE 。
@@ -28,8 +29,8 @@ Author: B08901097 徐有齊，B08901132 任瑨洋
 5. 關於 LoRa server 端，燒錄 Arduino\PM2.5_server 中的 Arduion code 至 LoRa server 端的 Uno 開發版上，使其可以接收來自 client 的訊息並傳送至 RPi。
 #### 關於各項係數：
 - LoRa 方面，我們使用 903.5 MHz 作為我們的通訊頻段。
-- Arduino Uno 的 UART 溝通方面，我們使用 9600 baudrate 溝通。
-- 更改過的 RH_RF95 方面，原本的 `rf95.init()` 並沒有參數傳入，我們將其改為 `rf95.init(float initFrequency = 434.0)` 後稍微更改其內容 ，使其在兼容原本程式碼的 434 MHz 的情況下允許我們輕鬆地更改傳輸頻率。
+- Arduino Uno 的 UART 溝通方面，我們使用 9600 baudrate 溝通， LoRa client 端的 debug message 和 LoRa server 端給 RPi 訊息皆是。
+- 更改過的 RH_RF95 方面，原本的 `rf95.init()` 並沒有參數傳入，我們將其改為 `rf95.init(float initFrequency = 434.0)` 後稍微更改其內容，使其在兼容原本程式碼的 434 MHz 的情況下允許我們輕鬆地更改傳輸頻率。
 
 ### Raspberry Pi
 #### 以下為操作步驟：
@@ -45,7 +46,11 @@ Author: B08901097 徐有齊，B08901132 任瑨洋
 	- `pip3 install paho-mqtt`
 	- `git clone https://github.com/MartianSheep/Intro2IoT_HW3`
 	- `cd Intro2IoT_HW3/RPi/`
-6. 確定 LoRa server 端的 Arduino Uno 已經插上 RPi 。使用 `ls -l \dev` 來確定此 Arduino Uno 使用哪一個 port 。我們在實作時 RPi 皆給 `/dev/ttyACM0` ，因此程式中預設使用此 port 。若有不同，請在 RPi/PM25.py 中第 34 行更改。
+6. 確定 LoRa server 端的 Arduino Uno 已經插上 RPi 。使用 `ls -l \dev` 來確定此 Arduino Uno 使用哪一個 port 。我們在實作時 RPi 皆給 `/dev/ttyACM0` ，因此程式中預設使用此 port 。若有不同，請在 RPi/PM25.py 中第 10 行更改 `com_port` 參數。
 7. 使用 `python3 PM25.py` 執行程式碼。
+#### 關於各項係數：
+- MQTT broker 的部份，在 RPi 安裝 mosquitto 後便會自動啟動。
+- 這邊由 `PM25.py` 擔任 MQTT publisher 的部分，這支程式會從 COM port 抓取從 Arduino Uno 傳來的資料，並將其 publish 出去。
+- 由於 MQTT broker 本身便架在 RPi 上，因此 `PM25.py` 中 broker 的位址便是 localhost ， port 使用預設的 1883 。
 
 ### Front-end Client (PC)

@@ -6,6 +6,9 @@ port = 1883
 topic = "hello/group0"
 client_id = "hello-group0-0"
 
+com_port = "/dev/ttyACM0"
+baudrate = 9600
+
 def connect_mqtt():
 	def on_connect(client, userdata, flags, rc):
 		if rc == 0:
@@ -31,7 +34,7 @@ def publish(ser, client):
 
 if __name__ == '__main__':
 	try:
-		ser = Serial("/dev/ttyACM0", 9600)
+		ser = Serial(com_port, baudrate)
 		client = connect_mqtt()
 		client.loop_start()
 		publish(ser, client)
