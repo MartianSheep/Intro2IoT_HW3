@@ -42,7 +42,7 @@ function App() {
           setText('Unhealthy')
           setColor('rgb(252, 40, 3)')
         }else {
-          setText('Hazardouts')
+          setText('Hazardous')
           setColor('rgb(74, 7, 1)')
         }
 
