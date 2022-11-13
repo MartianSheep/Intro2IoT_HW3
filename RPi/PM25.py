@@ -4,7 +4,7 @@ from serial import Serial
 broker = "localhost"
 port = 1883
 topic = "iot/hw3/mqtt"
-client_id = "hello-group0-0"
+client_id = "iot-hw3-mqtt-0"
 
 com_port = "/dev/ttyACM0"
 baudrate = 9600
