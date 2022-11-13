@@ -54,3 +54,4 @@ Author: B08901097 徐有齊，B08901132 任瑨洋
 - 由於 MQTT broker 本身便架在 RPi 上，因此 `PM25.py` 中 broker 的位址便是 localhost ， port 使用預設的 1883 。
 
 ### Front-end Client (PC)
+Full description in report.
