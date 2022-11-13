@@ -3,7 +3,7 @@ from serial import Serial
 
 broker = "localhost"
 port = 1883
-topic = "hello/group0"
+topic = "iot/hw3/mqtt"
 client_id = "hello-group0-0"
 
 com_port = "/dev/ttyACM0"

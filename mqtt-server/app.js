@@ -11,13 +11,7 @@ const opt = {
     clientId: 'nodejs',
 }
 
-// const cors = require('cors')
 
-// app.use(cors())
-
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -38,11 +32,11 @@ io.on("mqtt", (socket)=>{
     console.log('receive mqtt: '+socket);
     
 })
-var client = mqtt.connect('mqtt://172.20.10.2', opt);
+var client = mqtt.connect('mqtt://127.0.0.1', opt);
 
     client.on( 'connect', () => {
             console.log('connected!!')
-            client.subscribe('hello/group0')
+            client.subscribe('iot/hw3/mqtt')
         }
     )
     client.on( 'message', (topic, msg) => {
